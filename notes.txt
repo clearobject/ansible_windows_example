@@ -1,0 +1,11 @@
+Documentation is desperately needed in many areas.
+Extra setup is required on both the control and the client
+- Intalling Python
+- Enabling remote powershell / winrm with a special script
+- Installing extra modules for control system
+There is NO method of privilege escalation. You must connect as an admin for the system.
+The windows modules are all completely separate from the existing modules.
+- Cannot dynamically load for OS. If windows, needs its own complete set of steps.
+- Very limited compared to linux
+- Refactoring is almost impossible. Adding a step to a config would require a change in two places.
+So many escaped paths :(

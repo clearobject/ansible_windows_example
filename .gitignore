@@ -1,0 +1,18 @@
+# ignore vim swap files
+*.swp
+*.swo
+
+# ignore osx filesystem db
+*.DS_Store
+
+# ignore temp log files
+*.log
+
+# ignore compiled python
+*.pyc
+
+# Ignore ansible retries
+*.retry
+
+# Ignore vagrant files
+.vagrant/

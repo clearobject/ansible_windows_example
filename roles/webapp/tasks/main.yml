@@ -1,0 +1,6 @@
+---
+- name: Install development tools
+  win_chocolatey:
+    name: "{{ item }}"
+  with_items:
+    - notepadplusplus
