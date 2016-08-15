@@ -1,6 +1,7 @@
 ---
-- name: Install development tools
+- name: Install packages
   win_chocolatey:
     name: "{{ item }}"
   with_items:
+    - apache-httpd
     - notepadplusplus
