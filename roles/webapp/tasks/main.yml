@@ -1,7 +1,8 @@
 ---
-- name: Install packages
-  win_chocolatey:
-    name: "{{ item }}"
-  with_items:
-    - apache-httpd
-    - notepadplusplus
+- name: Installing apache
+  include: apache.yml
+
+- name: Update index page
+  win_template:
+    src: index.html.j2
+    dest: "{{ apache.install_root }}\\htdocs\\index.html"

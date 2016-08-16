@@ -1,0 +1,8 @@
+---
+download_directory: "C:\\ansible\\downloads"
+
+apache:
+  msi_url: http://archive.apache.org/dist/httpd/binaries/win32/httpd-2.2.25-win32-x86-openssl-0.9.8y.msi
+  server_admin: test@test.com
+  install_root: C:\Program Files (x86)\Apache Software Foundation\Apache2.2
+  archive_directory: C:\apache_logs

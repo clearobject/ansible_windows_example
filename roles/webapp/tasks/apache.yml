@@ -1,0 +1,57 @@
+---
+- name: Create ansible download directory
+  win_file:
+    path: "{{ download_directory }}"
+    state: directory
+
+- name: Download apache-httpd MSI
+  win_get_url:
+    url: "{{ apache.msi_url }}"
+    dest: "{{ download_directory }}\\apache-httpd.msi"
+    force: no
+  register: apache_download
+
+- name: Install apache-httpd
+  win_msi:
+    path: "{{ download_directory }}\\apache-httpd.msi"
+    wait: True
+
+- name: Setup apache service
+  raw: "\"{{ apache.install_root }}\\bin\\httpd.exe\" -k install"
+
+- name: Configure server admin
+  win_lineinfile:
+    dest: "{{ apache.install_root }}\\conf\\httpd.conf"
+    regexp: "^ServerAdmin"
+    line: "ServerAdmin {{ apache.server_admin }}"
+
+- name: Firewall rule to allow access to server
+  win_firewall_rule:
+    name: Web Server
+    enable: yes
+    state: present
+    localport: 80
+    action: allow
+    direction: In
+    protocol: TCP
+
+- name: Create apache user
+  win_user:
+    name: apache
+    password: "@p@ch3"
+    groups: ["Users"]
+
+- name: Rebooting the machine
+  win_reboot:
+  # when: apache_download.changed
+
+# Appears to be broken in Ansible 2.1.0.0
+# - name: Backup apache logs daily
+#   win_scheduled_task:
+#     name: "ApacheLogBackup"
+#     execute: "copy {{ apache.install_root }}\\logs {{ apache.archive_directory }}"
+#     frequency: "daily"
+#     time: "3am"
+#     description: "backup apache logs"
+#     state: present
+#     user: apache
